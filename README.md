@@ -3,10 +3,11 @@
 
 ## 1. FTP Status/Information : 
 
-  Number of folders/ number of files in a given folder.
-	Last file upload for a given folder.
-	Download all the file locally and Clearing all the files from that directory in FTP.
-  The code will give you the above information.
+
+   The code will give you the below information.
+  * Number of folders/ number of files in a given folder.
+  * Last file upload for a given folder.
+  * Download all the file locally and Clearing all the files from that directory in FTP.
 
 How to run the code:
 
@@ -19,17 +20,17 @@ How to run the code:
 ### Details it will provide:
 
 
-  Subchunk 1 size
-	Audioformat
-	Number of channels
-	Sample rate
-	Bits per sample
-	Subchunk 2 size
-	Time duration
+  * Subchunk 1 size
+  * Audioformat
+  * Number of channels
+  * Sample rate
+  * Bits per sample
+  * Subchunk 2 size
+  * Time duration
 ### Calculate and verify:
 
-  Byte rate
-	Block align
+   * Byte rate
+   * Block align
 
  How to run  the code :
  
