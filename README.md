@@ -46,7 +46,7 @@ This code will get the Device Id of each wav file and create a folder for each d
 
 How to run the code:
 
-		 ``` python read_device.py --input_path [path_to_the_directory]```
+``` python read_device.py --input_path [path_to_the_directory]```
 
 
 ## 4:  Wav file monitor:
@@ -56,5 +56,5 @@ This code will notify whenever the first upload has started and also notify when
 
 How to run the code:
 
-		``` python upload_stat.py --input_path [path_to_the_directory]```
+``` python upload_stat.py --input_path [path_to_the_directory]```
 
