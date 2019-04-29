@@ -61,9 +61,11 @@ python group_wav.py --input_path [path_to_the_directory]
 ## 4:  Wav file monitor:
 
 
-This code will notify whenever the first upload has started and also notify when there is no upload for certain time(1 min )
+This code will notify(send sms to the user) whenever the first upload has started and also notify when there is no upload for certain time(1 min )
 
 How to run the code:
 
-``` python upload_status.py --input_path [path_to_the_directory]```
+```shell
+python upload_status.py --input_path [path_to_the_directory]
+```
 
