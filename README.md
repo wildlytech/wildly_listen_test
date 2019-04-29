@@ -15,7 +15,7 @@ How to run the code:
    python ftp_status.py --input_path [path_to_the_directory]
    ```
 
-## 2. Read_wav_detail :
+## 2. Reading Wav files :
   
  
  The code will give details of each wav file in a directory and if some of the wav file are corrupt it will move that wav file in that directory.
