@@ -77,7 +77,7 @@ def connect():
     ''' TO connect to ftp server
 	'''
     global ftp, CURRENT_PATH, NAMES
-    ftp = FTP('34.211.117.196', user='user-u0xzU', passwd='h3KAGsdMHDIqJU')
+    ftp = FTP('****', user='****', passwd='***')
     print "connected to FTP"
     ftp.cwd(PRIMARY_PATH)
     CURRENT_PATH = ftp.pwd()
