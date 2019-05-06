@@ -16,7 +16,6 @@ PARSER.add_argument('-input_path', '--input_path', action='store',
 
 RESULT = PARSER.parse_args()
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
-print PRIMARY_PATH
 
 '''
 Code is copied from the below link
@@ -78,7 +77,7 @@ def connect():
     ''' TO connect to ftp server
 	'''
     global ftp, CURRENT_PATH, NAMES
-    ftp = FTP('*****', user='*****', passwd='****')
+    ftp = FTP('34.211.117.196', user='user-u0xzU', passwd='h3KAGsdMHDIqJU')
     print "connected to FTP"
     ftp.cwd(PRIMARY_PATH)
     CURRENT_PATH = ftp.pwd()
@@ -120,7 +119,7 @@ def group_wav_files():
                 # Getting the wav information and writing the csv file rows
                 listdata = file_header_info.read(listitemsize)
                 wav_information = listdata.decode("ascii").split(',')
-                
+
                 information_value = [name]
                 for index_value, each_tag_value in enumerate(wav_information):
                     _, corresponding_value = each_tag_value.split(":")
@@ -138,7 +137,6 @@ def group_wav_files():
                             print "No.of file moved ", count
 
                     information_value.append(corresponding_value)
-                print information_value
                 wav_information_object.writerow(information_value)
                 file_object.flush()
 
