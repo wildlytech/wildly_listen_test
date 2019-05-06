@@ -77,7 +77,7 @@ def connect():
     ''' TO connect to ftp server
 	'''
     global ftp, CURRENT_PATH, NAMES
-    ftp = FTP('****', user='****', passwd='***')
+    ftp = FTP('*****', user='****', passwd='****')
     print "connected to FTP"
     ftp.cwd(PRIMARY_PATH)
     CURRENT_PATH = ftp.pwd()
@@ -89,7 +89,8 @@ def group_wav_files():
     function to group wav files
     '''
     # varible to keep the count of no.of files
-    tag_names = ["Filename", "Operator", "DeviceID", "Battery_Voltage", "Battery_Percentage"]
+    tag_names = ["Filename", "Operator", "DeviceID", "Battery_Voltage",
+                 "Battery_Percentage", "Network_status", "Firmare_Revision", "Time_Stamp"]
     name_of_devices = set()
     initial_number_of_devices = 0
     count = 0
@@ -102,7 +103,7 @@ def group_wav_files():
         for name in NAMES:
             print name
             if (name[-3:] == 'wav') or (name[-3:] == 'WAV'):#check 	if the file is wav file only
-                file_header_info = BytesIO(FtpFile(ftp, name).read(128))
+                file_header_info = BytesIO(FtpFile(ftp, name).read(172))
 
                 # Get the header of the wav file
                 riff, size, fformat = struct.unpack('<4sI4s', file_header_info.read(12))
@@ -115,14 +116,15 @@ def group_wav_files():
                 listtype = struct.unpack('<4s', file_header_info.read(4))
                 listitemid, listitemsize = struct.unpack('<4sI', file_header_info.read(8))
 
-
                 # Getting the wav information and writing the csv file rows
-                listdata = file_header_info.read(listitemsize)
+                listdata = file_header_info.read(172)
                 wav_information = listdata.decode("ascii").split(',')
-
                 information_value = [name]
                 for index_value, each_tag_value in enumerate(wav_information):
-                    _, corresponding_value = each_tag_value.split(":")
+                    try:
+                        _, corresponding_value = each_tag_value.split(":")
+                    except ValueError:
+                        corresponding_value = "".join(each_tag_value.split(":")[1:])
                     if index_value == 0:
                         name_of_devices.add(corresponding_value)
                         destination = CURRENT_PATH+"/"+corresponding_value +"/"
