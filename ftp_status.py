@@ -2,6 +2,7 @@
 '''
 from ftplib import FTP
 import argparse
+from datetime import date, datetime, time, timedelta
 
 
 DESCRIPTION = 'Input The path to the directory'
@@ -14,6 +15,9 @@ RESULT = PARSER.parse_args()
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
 print PRIMARY_PATH
 
+# first character of file nmaes
+LETTER = 'A*'
+datetimeFormat = '%Y%m%d%H%M%S'
 
 def connect():
     '''
@@ -24,25 +28,55 @@ def connect():
     print "connected to FTP"
     CURRENT_DIR = ftp.cwd(PRIMARY_PATH)
 
+def first_modified():
+    '''to get first modified file in a directory
+    '''
+    names = ftp.nlst(LETTER)
+    oldest_time = None
+    oldest_name = None
+    count = 0
+
+    for name in names:
+        try:
+            if (name[-3:] == 'wav') or (name[-3:] == 'WAV'):
+                time1 = ftp.voidcmd("MDTM " + name)
+                #print name
+                count += 1
+                if (oldest_time is None) or (time1 < oldest_time):
+                    oldest_name = name
+                    oldest_time = time1
+        except:
+            connect()
+    lt=oldest_time[4:]
+    # adding 330 min to get time in IST
+    time2 = datetime.strptime(lt, datetimeFormat) + timedelta(minutes=330)
+    print "Number of files:", count
+    print "First uploaded File name:", oldest_name, ", Date and Time:", time2
+
 def last_modified():
+    '''to get last modified file in a directory
     '''
-    To count the total no.of files and last modified file in a directory
-    '''
-    names = ftp.nlst()
+    names = ftp.nlst(LETTER)
     latest_time = None
     latest_name = None
     count = 0
 
     for name in names:
-        if (name[-3:] == 'wav') or (name[-3:] == 'WAV'):
-            time1 = ftp.voidcmd("MDTM " + name)
-            count += 1
-            if (latest_time is None) or (time1 > latest_time):
-                latest_name = name
-                latest_time = time1
-
-    print "Last uploaded file is", latest_name, latest_time[4:]
-    print "Total no.of files is :", count
+        try:
+            if (name[-3:] == 'wav') or (name[-3:] == 'WAV'):
+                time1 = ftp.voidcmd("MDTM " + name)
+                #print name
+                count += 1
+                if (latest_time is None) or (time1 > latest_time):
+                    latest_name = name
+                    latest_time = time1
+        except:
+            connect()
+    lt = latest_time[4:]
+    # adding 330 min to get time in IST
+    time2 = datetime.strptime(lt, datetimeFormat) + timedelta(minutes=330)
+    print "Number of files:", count
+    print "Last uploaded File name:", latest_name, ", Date and Time:", time2    
 
 def download_files(flag):
     """
@@ -83,6 +117,7 @@ def clearing(flag):
 
 if __name__ == '__main__':
     connect()
+    first_modified()
     last_modified()
-    TOTAL_FILES_DOWNLOADED = download_files(1)
+    #TOTAL_FILES_DOWNLOADED = download_files(1)
     # clearing(1)
