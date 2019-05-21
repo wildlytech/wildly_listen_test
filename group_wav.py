@@ -6,7 +6,7 @@ from io import BytesIO
 from ssl import SSLSocket
 import argparse
 import csv
-
+import time
 
 DESCRIPTION = 'Input The path to the directory'
 HELP = 'Input the path'
@@ -16,6 +16,15 @@ PARSER.add_argument('-input_path', '--input_path', action='store',
 
 RESULT = PARSER.parse_args()
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
+
+#####################################################
+         # Define initial Gloabl Constant#
+#####################################################
+count = 0
+name_of_devices = set()
+initial_number_of_devices = 0
+SLEEP_TIME = 120
+
 
 '''
 Code is copied from the below link
@@ -77,7 +86,7 @@ def connect():
     ''' TO connect to ftp server
 	'''
     global ftp, CURRENT_PATH, NAMES
-    ftp = FTP('*****', user='****', passwd='****')
+    ftp = FTP('*********', user='******', passwd='******')
     print "connected to FTP"
     ftp.cwd(PRIMARY_PATH)
     CURRENT_PATH = ftp.pwd()
@@ -89,11 +98,8 @@ def group_wav_files():
     function to group wav files
     '''
     # varible to keep the count of no.of files
-    global name_of_devices
+    global name_of_devices, count, initial_number_of_devices
     NAMES = ftp.nlst()
-    name_of_devices = set()
-    initial_number_of_devices = 0
-    count = 0
 
     for name in NAMES:
         # print name
@@ -146,10 +152,12 @@ def group_wav_files():
 
             if len(name_of_devices) > initial_number_of_devices:
                 print "New Device detected :", name_of_devices
-                initial_number_of_devices = len(name_of_devices)      
-    return destination
+                initial_number_of_devices = len(name_of_devices)
 
 if __name__ == '__main__':
     connect()
-    group_wav_files()
+    while(True):
+        group_wav_files()
+        print "Waiting for Files to Accumulate"
+        time.sleep(SLEEP_TIME)
 
