@@ -1,71 +1,55 @@
-# Wildly_listen_test
 
+# Wildly Listen Test
 
-## 1. FTP Status : 
+There are two set of scripts for testing prototype
+1. Contious Monitoring 
+2. Post Transmission Analysis
 
+## Continuous Monitoring : 
+These scripts could be parllely while the device is uploading files to the FTP server.
 
-   The code will give you the below information.
-  * Number of folders/ number of files in a given folder.
-  * Last file upload for a given folder.
-  * Download all the file locally(if required) and Clearing all the files from that directory in FTP(if required).
-
-How to run the code:
-
-   ``` shell
-   python ftp_status.py --input_path [path_to_the_directory]
-   ```
-
-## 2. Reading Wav files :
-  
- 
- The code will give details of each wav file in a directory and if some of the wav file are corrupt it will move that wav file in that directory.
-
-### Details it will provide:
-
-
-  * Subchunk 1 size
-  * Audioformat
-  * Number of channels
-  * Sample rate
-  * Bits per sample
-  * Subchunk 2 size
-  * Time duration
-### Calculate and verify:
-
-   * Byte rate
-   * Block align
-
- How to run  the code :
- 
- 
-``` shell
-python read_wav_details.py --input_path [path_to_the_directory]
-```
-
-Output:
-Output will be a csv file which contains the details of all wav files
-
-
-## 3:  Wav file grouping by Device ID: 
-
-
-This code will get the Device Id of each wav file and create a folder for each device Id and move it to that director.
-
-How to run the code:
-
-``` shell
-python group_wav.py --input_path [path_to_the_directory]
-```
-
-
-## 4:  Wav file monitor:
-
-
-This code will notify(send sms to the user) whenever the first upload has started and also notify when there is no upload for certain time(1 min )
-
-How to run the code:
+##### 1. To Group wave files ```(.wav)``` that are being uploaded onto FTP server, on their ```Device ID ```
 
 ```shell
-python upload_status.py --input_path [path_to_the_directory]
+$ python group_wav.py --input_path /FTP_DIR_PATH/
+```
+######  output
+* Creates the directory as and when a file from a new ```Device ID``` is found.
+* Checks for the complete upload of the file and moves the file to the corresponding directory.
+* You can set the time interval after which the files are to be moved i.e window period for ```wav``` files to be uploaded by Device  using the changes shown below. You can change ```SLEEP_TIME```variable ```(seconds)```.
+
+```python
+
+#####################################################
+         # Define initial Gloabl Constant#
+#####################################################
+
+count = 0
+name_of_devices = set()
+initial_number_of_devices = 0
+SLEEP_TIME = 120
+
 ```
 
+##### 2. To monitor the Upload status of the device that is being uploaded onto FTP server.
+
+```shell
+$ python upload_status.py --input_path /FTP_DIR_PATH/
+```
+###### output 
+* Checks for the new files that are uploaded to the specified directory
+* ```Prints``` if no ```wav``` files are uploaded for the specified amount of time. ```( 2 Minutes)```
+* You can set the time you want to be popped up with the status by changing the sleep time in the code snipped mentioned below.
+```python
+# SET THE TIME INTERVAL AFTER WHICH IT CHECKS FOR NEW FILE, in seconds
+SLEEP_TIME = 120
+```
+
+
+## Post Transmission Analysis
+These python scripts should be run after the transmission test is done.
+
+Follow the link below for more details of these scripts
+```
+[Post Transmission Analysis](https://github.com/wildlytech/wildly_listen_test/tree/master/post_transmission_analysis)
+```
