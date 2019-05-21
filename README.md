@@ -50,6 +50,5 @@ SLEEP_TIME = 120
 These python scripts should be run after the transmission test is done.
 
 Follow the link below for more details of these scripts
-```
+
 [Post Transmission Analysis](https://github.com/wildlytech/wildly_listen_test/tree/master/post_transmission_analysis)
-```
