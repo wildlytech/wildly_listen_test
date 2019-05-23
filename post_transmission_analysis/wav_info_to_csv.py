@@ -110,26 +110,36 @@ def wav_info_to_csv():
         sorted_file_name_list = [element[1] for element in sorted_wav_files_list]
 
         for name in sorted_file_name_list:
-            if (name[-3:] == 'wav') or (name[-3:] == 'WAV'):#check  if the file is wav file only
+            if (name[-3:] == 'wav') or (name[-3:] == 'WAV'):
+
                 file_header_info = BytesIO(FtpFile(ftp, name).read(264))
 
-                # Get the header of the wav file
                 riff, size, fformat = struct.unpack('<4sI4s', file_header_info.read(12))
+                chunkoffset = file_header_info.tell()
+
                 chunk_header = file_header_info.read(8)
                 subchunkid, subchunksize = struct.unpack('<4sI', chunk_header)
+                chunkoffset = file_header_info.tell()
+
                 aformat, channels, samplerate, byterate, blockalign, bps = struct.unpack('HHIIHH', file_header_info.read(16))
                 chunkoffset = file_header_info.tell()
+
+                struct.unpack('<4sI', file_header_info.read(8))
+                struct.unpack('<4s4sI', file_header_info.read(12))
+                chunkoffset = file_header_info.tell()
+
+                extra_header = file_header_info.read(200)
+                chunkoffset = file_header_info.tell()
+
                 file_header_info.seek(chunkoffset)
                 subchunk2id, subchunk2size = struct.unpack('<4sI', file_header_info.read(8))
-                listtype = struct.unpack('<4s', file_header_info.read(4))
-                listitemid, listitemsize = struct.unpack('<4sI', file_header_info.read(8))
+                chunkoffset = file_header_info.tell()
 
                 wav_header = riff, size, fformat, subchunkid, subchunksize, aformat, \
                 channels, samplerate, byterate, blockalign, bps, subchunk2id, subchunk2size
 
-                # Getting the wav information and writing the csv file rows
-                listdata = file_header_info.read(200)
-                wav_information = listdata.decode("ascii").split(',')
+                #Getting the wav information and writing the csv file rows
+                wav_information = extra_header.decode("ascii").split(',')
                 information_value = [name]
                 for index_value, each_tag_value in enumerate(wav_information):
                     try:
@@ -141,7 +151,7 @@ def wav_info_to_csv():
                     information_value.append(info)    
                 wav_information_object.writerow(information_value)
                 file_object.flush()
-    print "wav file information saved to csv.."
+        print "wav file information saved to csv.."
 
 if __name__ == '__main__':
     connect()
