@@ -32,7 +32,7 @@ def connect():
     fuction to connect it to FTP
     '''
     global ftp
-    ftp = FTP('34.211.117.196', user='user-u0xzU', passwd='h3KAGsdMHDIqJU')
+    ftp = FTP('34.211.117.196', user='user-u0xzU', passwd='********')
     ftp.cwd(PRIMARY_PATH)
     print "connected to FTP", ftp.pwd()
 
