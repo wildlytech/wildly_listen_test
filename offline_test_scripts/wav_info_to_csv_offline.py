@@ -40,6 +40,7 @@ def sort_files():
     for sorted_file in sorted_wavfiles:
         wav_files_list.append(character + str(sorted_file) + extension)
     # print "wav_files_list :\n", wav_files_list
+    return wav_files_list
 
 def wav_header(wav_files_list):
     wav_info_tags = ["Filename", "Operator", "DeviceID", "Battery_Voltage", "Battery_Percentage", \
