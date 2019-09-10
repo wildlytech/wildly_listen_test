@@ -75,19 +75,23 @@ def get_wavheader_extraheader(wav_file):
 
 		extra_header_info = extra_header.decode("ascii").split(',')
 
-	return wavheader_dict, extra_header_info
+		return wavheader_dict, extra_header_info
 
 
 def sort_on_timestamp(wav_files_list):
 	DICT1 = {}
 	for each_wav_file in wav_files_list:
-		if os.path.getsize(each_wav_file) > 264:
-			wav_header, extra_header = get_wavheader_extraheader(each_wav_file)
-			for index_value, each_tag_value in enumerate(extra_header):
-				timestamp_tag = extra_header[index_value].split(":", 1)[0]
-				if timestamp_tag == ' Timestamp':
-					timestamp_value = extra_header[index_value].split(":", 1)[1]
-					DICT1[timestamp_value] = each_wav_file
+		try:
+			if (each_wav_file[-3:] == 'wav') or (each_wav_file[-3:] == 'WAV'):
+				if os.path.getsize(each_wav_file) > 264:
+					wav_header, extra_header = get_wavheader_extraheader(each_wav_file)
+					for index_value, each_tag_value in enumerate(extra_header):
+						timestamp_tag = extra_header[index_value].split(":", 1)[0]
+						if timestamp_tag == ' Timestamp':
+							timestamp_value = extra_header[index_value].split(":", 1)[1]
+							DICT1[timestamp_value] = each_wav_file
+		except TypeError:
+			continue
 	# sort based timestamp time
 	sorted_wav_files_list = sorted(DICT1.items(), key=operator.itemgetter(0))
 	# get wav file names from the sorted list
