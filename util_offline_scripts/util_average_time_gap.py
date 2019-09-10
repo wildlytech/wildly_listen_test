@@ -50,7 +50,7 @@ def average_time_gap():
 	for index, value in enumerate(sorted_timestamp_list):
 		try:
 			# datetimeFormat = '%Y%m%d%H%M%S'
-			datetimeFormat = '%d/%m/%Y-%H:%M:%S'
+			datetimeFormat = '%Y/%m/%d-%H:%M:%S'
 
 			time_diff = datetime.strptime(sorted_timestamp_list[index+1], \
 				datetimeFormat) - datetime.strptime(sorted_timestamp_list[index], datetimeFormat)
