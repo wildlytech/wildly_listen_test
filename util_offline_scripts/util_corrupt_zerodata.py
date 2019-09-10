@@ -25,8 +25,11 @@ def corrupt_zero_data():
 	zero_data_dst = PATH+'/'+'zero_data_files'
 	corrupt_dst = PATH+'/'+'corrupt_files'
 	for each_wav_file in files_list:
-		if os.path.getsize(each_wav_file) > 264:
-			wav_header, extra_header = util_offline.get_wavheader_extraheader(each_wav_file)
+		try:
+			if os.path.getsize(each_wav_file) > 264:
+				wav_header, extra_header = util_offline.get_wavheader_extraheader(each_wav_file)
+		except TypeError:
+			continue
 			blockalign = wav_header["BlockAlign"]
 			samplerate = wav_header["SampleRate"]
 
