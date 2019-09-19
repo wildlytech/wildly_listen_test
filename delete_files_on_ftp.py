@@ -18,7 +18,7 @@ def connect():
 	'''TO connect to ftp
 	'''
 	global ftp
-	ftp = FTP('34.211.117.196', user='user-u0xzU', passwd='h3KAGsdMHDIqJU')
+	ftp = FTP('***********', user='**********', passwd='***********')
 	print "connected to FTP"
 	ftp.cwd(PRIMARY_PATH)
 	# ftp_files = ftp.nlst()
