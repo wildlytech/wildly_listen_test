@@ -2,32 +2,14 @@ import struct
 import os
 import io
 import operator
+import glob
 from scipy.io import wavfile
-
-
-def sort_wav_files(files_list):
-	only_wavfiles = []
-	wav_files_list = []
-
-	for name in files_list:
-		if (name[-3:] == 'wav') or (name[-3:] == 'WAV'):
-			character = name[0:1]
-			extension = name[-4:]
-			only_wavfiles.append(name)
-			wav_files = [e[1:-4] for e in only_wavfiles]
-	wav_files_toint = map(int, wav_files)
-	sorted_wavfiles = sorted(wav_files_toint)
-	# print "sorted_wavfiles:", sorted_wavfiles
-
-	for sorted_file in sorted_wavfiles:
-		wav_files_list.append(character + str(sorted_file) + extension)
-	# print "wav_files_list :\n", wav_files_list
-	return wav_files_list
+import numpy as np
 
 
 def get_wavheader_extraheader(wav_file):
+	# get wav header and extra header information
 	wavheader_dict = {}
-	wavfiles_list = []
 	if (wav_file[-3:] == 'wav') or (wav_file[-3:] == 'WAV'):
 		fileIn = open(wav_file, 'rb')
 		file_header_info = io.BytesIO(fileIn.read(264))
@@ -72,13 +54,13 @@ def get_wavheader_extraheader(wav_file):
 			"SubChunk1Size", "AudioFormat", "NumChannels", "SampleRate", "ByteRate", \
 			"BlockAlign", "BitsPerSample", "SubChunk2ID", "SubChunk2Size"]):
 			wavheader_dict[each_value[1]] = each_value[0]
-
 		extra_header_info = extra_header.decode("ascii").split(',')
 
-		return wavheader_dict, extra_header_info
+	return wavheader_dict, extra_header_info
 
 
 def sort_on_timestamp(wav_files_list):
+	# sort wav files on timestamp
 	DICT1 = {}
 	for each_wav_file in wav_files_list:
 		try:
@@ -91,6 +73,13 @@ def sort_on_timestamp(wav_files_list):
 							timestamp_value = extra_header[index_value].split(":", 1)[1]
 							DICT1[timestamp_value] = each_wav_file
 		except TypeError:
+			# print "TypeError:", each_wav_file
+			continue
+		except UnicodeDecodeError:
+			# print "UnicodeDecodeError:", each_wav_file
+			continue
+		except IOError:
+			# print "IOError:", each_wav_file
 			continue
 	# sort based timestamp time
 	sorted_wav_files_list = sorted(DICT1.items(), key=operator.itemgetter(0))
@@ -99,30 +88,20 @@ def sort_on_timestamp(wav_files_list):
 	return files_list
 
 
-def missing_files(wav_files_list):
-	# to get missing files
-	wav_file_list = []
-	missing_element = []
-	for wav_file in wav_files_list:
-	    if (wav_file[-3:] == 'wav') or (wav_file[-3:] == 'WAV'):
-	    	character = wav_file[0:1]
-	    	extension = wav_file[-4:]
-	        wav_file_list.append(str(wav_file.rsplit(".", 1)[0]))
-
-	filenames = [fname[1:] for fname in wav_file_list]
-	filenames_toint = map(int, filenames)
-	sorted_filenames = sorted(filenames_toint, reverse=False)
-
-	for file_name in range(sorted_filenames[0], sorted_filenames[-1]+1):
-	    if file_name not in sorted_filenames:
-	        missing_element.append(character+str(file_name) + extension)
-	total_files = len(wav_file_list)
-	missing_element_count =  len(missing_element) 
-
-	return missing_element, missing_element_count, total_files
+def iter_over_folders(PATH):
+	# iterate over the folders and return the files list with absolute path
+	files_with_path = []
+	folders = glob.glob(PATH + "/D*")
+	print "No. of Folders:", len(folders)
+	for folder in folders:
+		files_with_path.append(glob.glob(folder+'/'+'*.wav'))
+	file_list1 = np.concatenate(files_with_path).ravel().tolist()
+	print "No. of files:", len(file_list1)
+	return file_list1
 
 
 def check_wav_file_size(wav_file, samplerate, blockalign):
+	# check for wav file size
 	if os.path.getsize(wav_file) > samplerate*blockalign*10:
 		return True
 	else:
@@ -130,6 +109,7 @@ def check_wav_file_size(wav_file, samplerate, blockalign):
 
 
 def zero_data(each_wav_file):
+	# check for zero date in wav files
 	wavdata = wavfile.read(each_wav_file)[1]
 	if wavdata.sum() == 0:
 		return True
