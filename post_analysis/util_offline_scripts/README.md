@@ -38,10 +38,3 @@ python util_wav_info_to_csv.py  -input_path /path/to/wav/files
                                 -path_to_save_csv /path/to/save/csv/file/
 ```
 <br>
-
-#### *SD-Card folders path info:*
->```mermaid
->graph TB
->A[Given SD-card folders path] --Folder names in the given path should start with 'D'--> B(Day1_October2020, Day2_October2020)
->B --wav files in each folder--> C(A12345.wav, A23456.wav, A34567.wav)
->```
