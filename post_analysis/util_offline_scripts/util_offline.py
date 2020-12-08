@@ -82,7 +82,7 @@ def sort_on_timestamp(wav_files_list):
 			# print "IOError:", each_wav_file
 			continue
 	# sort based timestamp time
-	sorted_wav_files_list = sorted(DICT1.items(), key=operator.itemgetter(0))
+	sorted_wav_files_list = sorted(list(DICT1.items()), key=operator.itemgetter(0))
 	# get wav file names from the sorted list
 	files_list = [element[1] for element in sorted_wav_files_list]
 	return files_list
@@ -92,11 +92,11 @@ def iter_over_folders(PATH):
 	# iterate over the folders and return the files list with absolute path
 	files_with_path = []
 	folders = glob.glob(PATH + "/D*")
-	print "No. of Folders:", len(folders)
+	print ("No. of Folders:", len(folders))
 	for folder in folders:
 		files_with_path.append(glob.glob(folder+'/'+'*.wav'))
 	file_list1 = np.concatenate(files_with_path).ravel().tolist()
-	print "No. of files:", len(file_list1)
+	print ("No. of files:", len(file_list1))
 	return file_list1
 
 

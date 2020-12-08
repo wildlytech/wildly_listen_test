@@ -16,7 +16,7 @@ PARSER.add_argument('-input_first_character', '--input_first_character', action=
 RESULT = PARSER.parse_args()
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
 character = RESULT.input_first_character
-print "Character:", character
+print ("Character:", character)
 
 
 def connect():
@@ -24,7 +24,7 @@ def connect():
 	'''
 	global ftp
 	ftp = FTP('**********', user='**********', passwd='**********')
-	print "connected to FTP"
+	print ("connected to FTP")
 	ftp.cwd(PRIMARY_PATH)
 
 
@@ -66,8 +66,8 @@ def corrupt_files():
 	connect()
 	ftp.cwd(PRIMARY_PATH+'CorruptFiles')
 	corrupt_count = ftp.nlst()
-	print "Corrupt files:", corrupt_count
-	print "No. of corrupt files moved:", len(corrupt_count)
+	print ("Corrupt files:", corrupt_count)
+	print ("No. of corrupt files moved:", len(corrupt_count))
 
 
 if __name__ == '__main__':

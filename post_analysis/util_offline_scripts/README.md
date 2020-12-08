@@ -34,7 +34,7 @@ $ python util_first_and_last_file.py  -input_path /path/to/wav/files/
 
 #### 4. Read wav_header and extra_header information of each wav file in SD-card and save it to a CSV file :
 ```shell
-python util_wav_info_to_csv.py  -input_path /path/to/wav/files 
-                                -path_to_save_csv /path/to/save/csv/file/
+$ python util_wav_info_to_csv.py  -input_path /path/to/wav/files 
+                                  -path_to_save_csv /path/to/save/csv/file/
 ```
 <br>

@@ -10,7 +10,7 @@ PARSER.add_argument('-input_path', '--input_path', action='store', help='Input p
 
 RESULT = PARSER.parse_args()
 PATH = RESULT.input_path
-print "Path:", PATH
+print ("Path:", PATH)
 
 
 def corrupt_zero_data():
@@ -24,7 +24,7 @@ def corrupt_zero_data():
 			if os.path.getsize(each_wav_file) > 264:
 				wav_header, extra_header = util_offline.get_wavheader_extraheader(each_wav_file)
 			else:
-				print each_wav_file
+				print(each_wav_file)
 				continue
 		except TypeError:
 			continue
@@ -63,5 +63,5 @@ def corrupt_zero_data():
 
 if __name__ == '__main__':
 	corrupt_count1, zero_data_count1 = corrupt_zero_data()
-	print "Corrupt files count:", corrupt_count1
-	print "Zero Data files count:", zero_data_count1
+	print ("Corrupt files count:", corrupt_count1)
+	print ("Zero Data files count:", zero_data_count1)

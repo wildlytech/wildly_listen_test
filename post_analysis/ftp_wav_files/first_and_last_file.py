@@ -17,14 +17,14 @@ PARSER.add_argument('-input_first_character', '--input_first_character', action=
 RESULT = PARSER.parse_args()
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
 character = RESULT.input_first_character
-print "Character:", character
+print ("Character:", character)
 
 
 def connect():
 	'''To connect to ftp'''
 	global ftp
 	ftp = FTP('**********', user='**********', passwd='**********')
-	print "connected to FTP"
+	print("connected to FTP")
 	ftp.cwd(PRIMARY_PATH)
 
 
@@ -32,7 +32,7 @@ def first_and_last_modified():
 	'''Returns first and last file with timestamp'''
 	util.connect(PRIMARY_PATH)
 	selected_dir = util.select_sub_folder_in_directory(PRIMARY_PATH)
-	print "Selected Directory:", selected_dir
+	print ("Selected Directory:", selected_dir)
 	if selected_dir == None:
 		quit()
 	else:
@@ -56,7 +56,6 @@ def first_and_last_modified():
 		return first_file_with_datetime, last_file_with_datetime
 
 if __name__ == '__main__':
-	# connect()
 	first_file, last_file = first_and_last_modified()
-	print "First file, Date and time:", first_file
-	print "Last file, Date and time:", last_file
+	print ("First file, Date and time:", first_file)
+	print ("Last file, Date and time:", last_file)

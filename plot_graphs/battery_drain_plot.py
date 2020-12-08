@@ -15,7 +15,7 @@ PARSER.add_argument('-input_csv_path', '--input_csv_path', action='store', \
 
 RESULT = PARSER.parse_args()
 PATH = RESULT.input_csv_path
-print "Given path to csv files:", PATH
+print("Given path to csv files:", PATH)
 
 os.chdir(PATH)
 
@@ -29,7 +29,7 @@ def battery_drain_plot(csv):
     # read csv and get battery percentage column
 	df = pd.read_csv(csv)
 	list_of_battery_percentage = df['Battery_Percentage'].values.tolist()
-	print 'Length of list_of_battery_percentage:', len(list_of_battery_percentage)
+	print('Length of list_of_battery_percentage:', len(list_of_battery_percentage))
 	return list_of_battery_percentage
 
 
@@ -38,7 +38,7 @@ def battery_drain_plot(csv):
 
 # add all csv present in the given path
 csv_files = glob.glob(PATH + "/*.csv")
-print "No. of CSV files:", len(csv_files)
+print("No. of CSV files:", len(csv_files))
 # print "CSV file(s):", csv_files
 
 for csv_file in csv_files:

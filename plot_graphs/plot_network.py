@@ -15,7 +15,7 @@ PARSER.add_argument('-input_csv_path', '--input_csv_path', action='store', \
 
 RESULT = PARSER.parse_args()
 PATH = RESULT.input_csv_path
-print "Given path to csv files:", PATH
+print("Given path to csv files:", PATH)
 
 os.chdir(PATH)
 
@@ -35,8 +35,8 @@ def plot_network(csv):
 
 # get all the csv files present in the given path
 csv_files = glob.glob(PATH + "/*.csv")
-print "No. of CSV files:", len(csv_files)
-print "CSV file(s):", csv_files
+print("No. of CSV files:", len(csv_files))
+print("CSV file(s):", csv_files)
 
 for csv_file in csv_files:
     files_count1 = plot_network(csv_file)

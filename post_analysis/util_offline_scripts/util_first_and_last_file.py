@@ -9,7 +9,7 @@ PARSER.add_argument('-input_path', '--input_path', action='store', help='Input p
 
 RESULT = PARSER.parse_args()
 PATH = RESULT.input_path
-print "Path:", PATH
+print ("Path:", PATH)
 
 
 def first_and_last_modified_files():
@@ -40,5 +40,5 @@ def first_and_last_modified_files():
 
 if __name__ == '__main__':
 	first_and_last_modified_files2 = first_and_last_modified_files()
-	print "First file:", first_and_last_modified_files2[0]
-	print " Last file:", first_and_last_modified_files2[-1]
+	print ("First file:", first_and_last_modified_files2[0])
+	print (" Last file:", first_and_last_modified_files2[-1])
