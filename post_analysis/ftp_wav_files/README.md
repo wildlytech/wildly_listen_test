@@ -43,6 +43,8 @@ $ python wavheader_info_to_csv.py -input_path /ftp/folder/path/to/wav/files
 <br>
 
 ####  4. Move corrupt wav files to Corrupt_files folder if found:
+Given FTP path should be bottom directory, where wav files are stored.
+
 ```shell
 $ python corrupt_files.py  -input_path /ftp/folder/path/to/wav/files 
                            -input_first_character input_first_character_of_wav_file

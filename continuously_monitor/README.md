@@ -39,6 +39,8 @@ $ python device_status.py -input_path /ftp/folder/path/
 <br>
 
 #### 3. Download or delete wav_files in the given **FTP** directory.
+Given FTP path should be bottom directory, where wav files are stored.
+
 ```shell
 $ python download_delete_files_in_ftp.py -input_path /ftp/folder/path/
                                          -input_first_character input_first_character_of_wav_file 
