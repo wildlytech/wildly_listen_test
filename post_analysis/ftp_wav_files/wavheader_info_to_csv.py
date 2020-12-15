@@ -23,9 +23,9 @@ PARSER.add_argument('-input_first_character', '--input_first_character', action=
 RESULT = PARSER.parse_args()
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
 PATH_2 = RESULT.path_to_save_csv
-print "Given path to save CSV:", PATH_2
+print ("Given path to save CSV:", PATH_2)
 character = RESULT.input_first_character
-print "Character:", character
+print ("Character:", character)
 
 CSV_FILE_NAME = "Transmitted_wav_files_info.csv"
 
@@ -34,7 +34,7 @@ def connect(PRIMARY_PATH):
     '''
     global ftp
     ftp = FTP('**********', user='**********', passwd='**********')
-    print "connected to FTP"
+    print("connected to FTP")
     ftp.cwd(PRIMARY_PATH)
 
 
@@ -45,7 +45,7 @@ def wav_header_to_csv(PRIMARY_PATH, character):
 	util.connect(PRIMARY_PATH)
 
 	selected_dir = util.select_sub_folder_in_directory(PRIMARY_PATH)
-	print "Selected Directory:", selected_dir
+	print ("Selected Directory:", selected_dir)
 	if selected_dir == None:
 		quit()
 	else:
@@ -60,7 +60,7 @@ def wav_header_to_csv(PRIMARY_PATH, character):
 	"AudioFormat", "NumChannels", "SampleRate", "ByteRate", "BlockAlign", \
 	"BitsPerSample", "SubChunk2ID", "SubChunk2Size"]
 
-	print "CSV File name:", CSV_FILE_NAME
+	print ("CSV File name:", CSV_FILE_NAME)
 	with open(PATH_2 +'/'+ CSV_FILE_NAME, "w") as file_object:
 		wav_information_object = csv.writer(file_object)
 		wav_information_object.writerow(wav_info_tags)
@@ -125,7 +125,6 @@ def wav_header_to_csv(PRIMARY_PATH, character):
 					    seconds = dd*24*60*60 + hh*60*60 + mm*60 + ss
 					information_value.append(seconds)
 
-
 				wav_information_object.writerow(information_value)
 				file_object.flush()
 			except socket.error:
@@ -133,7 +132,7 @@ def wav_header_to_csv(PRIMARY_PATH, character):
 			except ftplib.error_temp:
 				util.connect(PRIMARY_PATH)
 			except struct.error:
-				print "File size error, file name:", wav_file
+				print("File size error, file name:", wav_file)
 				continue
 	return PRIMARY_PATH2
 

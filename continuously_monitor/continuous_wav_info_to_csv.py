@@ -29,10 +29,10 @@ RESULT = PARSER.parse_args()
 
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
 PATH_2 = RESULT.path_to_save_csv
-print "Given path to save CSV:", PATH_2
+print("Given path to save CSV:", PATH_2)
 
 CHARACTER = RESULT.input_first_character
-print "Character:", CHARACTER
+print("Character:", CHARACTER)
 
 CSV_FILE_NAME = "Transmitted_wav_files_info.csv"
 
@@ -40,7 +40,7 @@ CSV_FILE_NAME = "Transmitted_wav_files_info.csv"
 def connect(PRIMARY_PATH):
     '''Connect to ftp'''
     global ftp
-    ftp = FTP('********', user='********', passwd='********')
+    ftp = FTP('**********', user='**********', passwd='**********')
     ftp.cwd(PRIMARY_PATH)
 
 
@@ -62,12 +62,12 @@ def continuous_wav_info_to_csv():
     '''
     # add wav files header and extra header information to csv
     primary_path2 = wavheader_info_to_csv.wav_header_to_csv(PRIMARY_PATH, CHARACTER)
-    print "primary_path2:", primary_path2
+    print("primary_path2:", primary_path2)
     # connect to selected ftp directory
     connect(primary_path2)
     list_of_files = ftp.nlst(str(CHARACTER)+'*')
     names = check_for_wavfiles_only(list_of_files)
-    print "No. of files in ftp directory:", len(names)
+    print("No. of files in ftp directory:", len(names))
 
     # save all the previous wav files list in a dict to compare later
     before = dict([(file_name, None) for file_name in names])
@@ -92,7 +92,7 @@ def continuous_wav_info_to_csv():
         if added:
             DICT1 = {}
             UPLOADED_FILES.append(added)
-            print len(added), "file(s) added", ",", "Added file name(s): ", ", ".join(added)
+            print(len(added), "file(s) added", ",", "Added file name(s): ", ", ".join(added))
             # sort the wav files based on ftp time
             for name in files_not_in_csv:
                 try:
@@ -104,7 +104,7 @@ def continuous_wav_info_to_csv():
                 except socket.error:
                     connect(PRIMARY_PATH)
             # sort based on ftp time
-            sorted_time_list = sorted(DICT1.items(), key=operator.itemgetter(0))
+            sorted_time_list = sorted(list(DICT1.items()), key=operator.itemgetter(0))
             sorted_wav_files_list = [element[1] for  element in sorted_time_list]
 
             # open csv where wav header infomation is added and
@@ -170,7 +170,7 @@ def continuous_wav_info_to_csv():
                     except ftplib.error_temp:
                         connect(primary_path2)
                     except struct.error:
-                        print "File size error, file name:", wav_file
+                        print("File size error, file name:", wav_file)
                         continue
 
         before = after

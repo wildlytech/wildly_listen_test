@@ -20,7 +20,8 @@ util.connect(PRIMARY_PATH)
 dir_n_timestamp, directories_time_list = util.last_ftp_time(PRIMARY_PATH)
 
 dir_n_timestamp, status = util.active_or_inactive(dir_n_timestamp, directories_time_list)
+print("FTP Directory:", ftp_dir)
 
-print "FTP Directory:", ftp_dir
-for device_id, status in map(None, dir_n_timestamp, status):
-    print "\nDevice ID:", device_id[0], ", Status:", status, ", Last Time:", device_id[1]
+for i in range(len(status)):
+    print("Device ID:", dir_n_timestamp[i][0], ", Status:", status[i], ", Last Time:", \
+    	dir_n_timestamp[i][1])

@@ -10,7 +10,7 @@ PARSER = argparse.ArgumentParser(description=DESCRIPTION)
 PARSER.add_argument('-input_path', '--input_path', action='store', help='Input path to wav files')
 RESULT = PARSER.parse_args()
 PATH = RESULT.input_path
-print "Path:", PATH
+print ("Path:", PATH)
 
 
 def average_time_gap():
@@ -34,7 +34,7 @@ def average_time_gap():
 						timestamp_value = extra_header[index_value].split(":", 1)[1]
 						wavfiles_list.append((each_wav_file, str(timestamp_value)))
 		except struct.error:
-			print "struct.error:", each_wav_file
+			print("struct.error:", each_wav_file)
 			continue
 
 	sorted_timestamp_list = [element[1] for element in wavfiles_list]
@@ -63,12 +63,12 @@ def average_time_gap():
 	        seconds = hh*60*60 + mm*60 + ss
 	        to_seconds.append(seconds)
 	    else:
-			dd = int(td.split(" ")[0])
-			hh = int(td.split(" ")[2].split(":")[0])
-			mm = int(td.split(" ")[2].split(":")[1])
-			ss = int(td.split(" ")[2].split(":")[2])
-			seconds = dd*24*60*60 + hh*60*60 + mm*60 + ss
-			to_seconds.append(seconds)
+	    	dd = int(td.split(" ")[0])
+	    	hh = int(td.split(" ")[2].split(":")[0])
+	    	mm = int(td.split(" ")[2].split(":")[1])
+	    	ss = int(td.split(" ")[2].split(":")[2])
+	    	seconds = dd*24*60*60 + hh*60*60 + mm*60 + ss
+	    	to_seconds.append(seconds)
 
 	average_time = numpy.average(to_seconds).round(3)
 	min_max = min(to_seconds), max(to_seconds)
@@ -77,5 +77,5 @@ def average_time_gap():
 
 if __name__ == '__main__':
 	average_time1, min_max1 = average_time_gap()
-	print "Average time:", average_time1, "sec",
-	print "\nMin :", min_max1[0], "sec, Max :", min_max1[1], "sec"
+	print ("Average time:", average_time1, "sec")
+	print ("Min :", min_max1[0], "sec, Max :", min_max1[1], "sec")

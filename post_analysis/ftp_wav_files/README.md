@@ -7,6 +7,8 @@ Below mentioned information will be the output for the given FTP directory as in
 - Read wav_header and extra_header information of each wav file in FTP and save it to csv file.
 - Corrupt wav files will be moved to the *Corrupt_files* folder in the FTP.
 
+> Note: Add FTP credentials to the scripts before running them.
+
 <br>
 
 ### Scripts to analyze wav files in FTP
@@ -41,7 +43,14 @@ $ python wavheader_info_to_csv.py -input_path /ftp/folder/path/to/wav/files
 <br>
 
 ####  4. Move corrupt wav files to Corrupt_files folder if found:
+Given FTP path should be bottom directory, where wav files are stored.
+
 ```shell
 $ python corrupt_files.py  -input_path /ftp/folder/path/to/wav/files 
                            -input_first_character input_first_character_of_wav_file
 ```
+> Example: 
+> ```shell
+> $ python corrupt_files.py -input_path /BNP/DEV5487102_19:10:01-12:27:51/
+>                           -input_first_character A
+> ```

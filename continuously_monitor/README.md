@@ -5,6 +5,9 @@
   - Know the device status for the last 5minutes.
 
 - Download or delete wav_files or download single wav_file in the given **FTP** directory.
+
+> Note: Add FTP credentials to the scripts before running them.
+
 <br>
 
 #### 1. Continuously save wav_files information to CSV file :
@@ -36,8 +39,17 @@ $ python device_status.py -input_path /ftp/folder/path/
 <br>
 
 #### 3. Download or delete wav_files in the given **FTP** directory.
+Given FTP path should be bottom directory, where wav files are stored.
+
 ```shell
 $ python download_delete_files_in_ftp.py -input_path /ftp/folder/path/
                                          -input_first_character input_first_character_of_wav_file 
                                          -download_delete enter_argument
 ```
+
+> Example:
+> ```shell
+> $ python download_delete_files_in_ftp.py -input_path /BNP/DEV5487102_19:10:01-12:27:51/
+>                                          -input_first_character A
+>                                          -download_delete 3
+> ```

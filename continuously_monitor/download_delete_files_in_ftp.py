@@ -18,43 +18,43 @@ RESULT = PARSER.parse_args()
 PRIMARY_PATH = "/home/user-u0xzU" + RESULT.input_path
 CHARACTER = RESULT.input_first_character
 FLAG = RESULT.download_delete
-print "Path:", PRIMARY_PATH
-print "character:", CHARACTER
+print("Path:", PRIMARY_PATH)
+print("character:", CHARACTER)
 dirpath = os.getcwd()
 
 # add ftp credentials to connect
 def connect(PRIMARY_PATH):
     '''Connect to ftp'''
     global ftp
-    ftp = FTP('*********', user='*********', passwd='*********')
+    ftp = FTP('**********', user='**********', passwd='**********')
     ftp.cwd(PRIMARY_PATH)
-    print "connected to FTP"
+    print("connected to FTP")
 
 
 def delete_files():
     '''Delete files'''
     files_list = ftp.nlst(str(CHARACTER)+'*')
     count = 0
-    print "Deleting files.."
+    print("Deleting files..")
     for f in files_list:
-		try:
-			count += 1
-			ftp.delete(f)
-		except ftplib.error_temp:
-			connect(PRIMARY_PATH)
-		except socket.error:
-			connect(PRIMARY_PATH)
-    print "No. of files deleted:", count
-    print "Finished deleting files.."
+        try:
+            count += 1
+            ftp.delete(f)
+        except ftplib.error_temp:
+            connect(PRIMARY_PATH)
+        except socket.error:
+            connect(PRIMARY_PATH)
+    print("No. of files deleted:", count)
+    print("Finished deleting files..")
 
 
 def download_files():
     '''Download files'''
     count1 = 0
     files_list = ftp.nlst(str(CHARACTER)+'*')
-    print "Downloading files.."
+    print("Downloading files..")
     path_to_save_wav_files = dirpath+'/downloaded_files'+RESULT.input_path
-    print "Wav files downloaded to:", path_to_save_wav_files
+    print("Wav files downloaded to:", path_to_save_wav_files)
 
     if not os.path.exists(path_to_save_wav_files):
     	os.makedirs(path_to_save_wav_files)
@@ -62,14 +62,14 @@ def download_files():
         with open(path_to_save_wav_files+each_wav_file, 'wb') as file_obj:
             ftp.retrbinary('RETR '+ each_wav_file, file_obj.write)
             count1 += 1
-    print "Number of files downloaded:", count1
-    print "Finished downloading files.."
+    print("Number of files downloaded:", count1)
+    print("Finished downloading files..")
 
 
 def download_file(each_wav_file):
     ''' download single file '''
     with open(each_wav_file, 'wb') as file_obj:
-		ftp.retrbinary('RETR '+ each_wav_file, file_obj.write)
+        ftp.retrbinary('RETR '+ each_wav_file, file_obj.write)
 
 
 connect(PRIMARY_PATH)

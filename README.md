@@ -39,3 +39,12 @@ Post analysis has two set of scripts to test the prototype:
 *ftp_wav_files* : Analyze the audio data uploaded to FTP server by running these scripts.
 
 *util_offline_scripts* : Analyze the audio data stored in SD-Card by running these scripts.
+
+
+<br>
+
+#### Python 3.7 packages:
+To install the required python packages type below command:
+```shell
+$ pip3 install -r requirements.txt
+```

@@ -15,8 +15,8 @@ PARSER.add_argument('-path_to_save_csv', '--path_to_save_csv', action='store', \
 RESULT = PARSER.parse_args()
 PATH = RESULT.input_path
 PATH_2 = RESULT.path_to_save_csv
-print "Given Path:", PATH
-print "Given path to save CSV:", PATH_2
+print ("Given Path:", PATH)
+print ("Given path to save CSV:", PATH_2)
 os.chdir(PATH)
 
 
@@ -32,7 +32,7 @@ def get_wavheader_extraheader_to_csv():
 	"BitsPerSample", "SubChunk2ID", "SubChunk2Size"]
 
 	CSV_FILE_NAME = "sd_card_folders_wav_files_info.csv"
-	print "CSV File name:", CSV_FILE_NAME
+	print ("CSV File name:", CSV_FILE_NAME)
 	with open(PATH_2 +'/'+ CSV_FILE_NAME, "w") as file_object:
 		wav_information_object = csv.writer(file_object)
 		wav_information_object.writerow(wav_info_tags)
@@ -98,16 +98,16 @@ def get_wavheader_extraheader_to_csv():
 	        seconds = hh*60*60 + mm*60 + ss
 	        to_seconds.append(seconds)
 	    else:
-			dd = int(td.split(" ")[0])
-			hh = int(td.split(" ")[2].split(":")[0])
-			mm = int(td.split(" ")[2].split(":")[1])
-			ss = int(td.split(" ")[2].split(":")[2])
-			seconds = dd*24*60*60 + hh*60*60 + mm*60 + ss
-			to_seconds.append(seconds)
+	    	dd = int(td.split(" ")[0])
+	    	hh = int(td.split(" ")[2].split(":")[0])
+	    	mm = int(td.split(" ")[2].split(":")[1])
+	    	ss = int(td.split(" ")[2].split(":")[2])
+	    	seconds = dd*24*60*60 + hh*60*60 + mm*60 + ss
+	    	to_seconds.append(seconds)
 	# add seconds list to a separate column to the generated csv
 	df['Time_Difference'] = to_seconds
 	df.to_csv(csv_file_path, index=False)
-	print "Wav files information saved to CSV.."
+	print("Wav files information saved to CSV file")
 
 if __name__ == '__main__':
 	get_wavheader_extraheader_to_csv()
